@@ -1,0 +1,50 @@
+FROM ubuntu:latest AS minimal
+
+COPY . ./build_src
+
+WORKDIR ./build_src
+
+RUN mkdir /dist
+
+
+FROM minimal AS base
+
+RUN apt-get update && \
+    apt-get -y --no-install-recommends install python3 && \
+    apt-get clean
+
+
+FROM base AS piDeps
+
+RUN ["python3", "./build.py", "-d", "-pi"]
+
+
+FROM piDeps AS piBuild
+
+RUN ["python3", "./build.py", "-pi"]
+
+RUN cp ./dist/*.zip /dist/
+
+
+FROM piDeps AS piOfBuild
+
+RUN ["python3", "./build.py", "-pi", "-o"]
+
+RUN cp ./dist/*.zip /dist/
+
+FROM scratch AS dist
+
+COPY --from=piBuild /dist/* /dist/
+
+COPY --from=piOfBuild /dist/* /dist/
+
+WORKDIR /dist
+
+RUN ls *
+
+
+# ENV dist_dir=
+
+# VOLUME ["/dist"]
+
+# ARG
