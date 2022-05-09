@@ -47,4 +47,8 @@ RUN ls *
 
 # VOLUME ["/dist"]
 
+# COPY --from=piOfBuild /dist/* /dist/ \ merge copy
+
+
 # ARG
+# python3-minimal

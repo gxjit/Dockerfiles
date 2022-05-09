@@ -1,0 +1,13 @@
+Bittorrent\Encryption=1
+WebUI\BanDuration=3600
+WebUI\SessionTimeout=3600
+WebUI\AuthSubnetWhitelist=192.168.1.0/24
+WebUI\AuthSubnetWhitelistEnabled=true
+General\UseRandomPort=true
+Advanced\AnonymousMode=true
+WebUI\HTTPS\Enabled=true
+WebUI\Password_ha1=@ByteArray(ee1b6128102768385a909a642a01ad89)
+WebUI\CSRFProtection=true
+WebUI\ClickjackingProtection=true
+WebUI\HostHeaderValidation=true
+

@@ -1,0 +1,42 @@
+FROM alpine:edge
+
+ENV QBT_WEBUI_PORT=9099 \
+    QBT_PROFILE=/config
+
+COPY q*.conf ${QBT_PROFILE}/
+
+RUN apk add --no-cache qbittorrent-nox
+
+EXPOSE ${QBT_WEBUI_PORT} 6881 6881/udp
+
+ENTRYPOINT ["qbittorrent-nox"]
+
+# VOLUME /config # /.config/qBittorrent/
+# https://github.com/CzBiX/qb-web > dist\
+
+# docker run -d \
+#   --name=qbittorrent \
+#   -e PUID=1000 \
+#   -e PGID=1000 \
+#   -e TZ=Asia/Kolkata \
+#   -e WEBUI_PORT=9099 \
+#   -p 9099:9099 \
+#   -p 6881:6881 \
+#   -p 6881:6881/udp \
+#   -v /path/to/config:/config \
+#   -v /path/to/downloads:/downloads \
+#   .
+
+# -u $(id -u):$(id -g) \ #   -e PUID=1000 -e PGID=1000 \
+# docker exec -it qbittorrent /bin/bash
+
+
+# https://hub.docker.com/r/linuxserver/qbittorrent
+# --webui-port=<port>
+    # --profile=<dir>            Store configuration files in <dir>
+    # --configuration=<name>     Store configuration files in directories  qBittorrent_<name>
+    # --sequential
+    # --save-path=<path>         Torrent save path
+    #  QBT_PROFILE QBT_NO_SPLASH=1
+
+# https://github.com/qbittorrent/qBittorrent/blob/master/src/base/settingsstorage.cpp
